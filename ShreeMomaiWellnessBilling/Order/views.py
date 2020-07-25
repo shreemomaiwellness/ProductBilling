@@ -31,6 +31,7 @@ def CreateOrderPost(request):
         phone = request.POST.get('phone')
         email = request.POST.get('email')
         deliveryDate = request.POST.get('DeliveryDate')
+        billingDate = request.POST.get('BillingDate')
 
         ProductIds = request.POST.getlist('product')
         Quantities = [i for i in request.POST.getlist('Quantity') if i]
@@ -68,15 +69,15 @@ def CreateOrderPost(request):
                                            Address2=address2, City=city, PinCode=pincode, Phone=phone, Email=email)
         customer.save()
         if PaymentMode == "Cash":
-            order = Order.objects.create(FK_Customer_Id=customer, Date=timezone.now(), IsCash=True,
+            order = Order.objects.create(FK_Customer_Id=customer, Date=billingDate, IsCash=True,
                                          DeliveryDate=deliveryDate,
                                          TotalAmount=FinalAmount)
         if PaymentMode == "Cheque":
-            order = Order.objects.create(FK_Customer_Id=customer, Date=timezone.now(), IsCheque=True, BankName=BankName,
+            order = Order.objects.create(FK_Customer_Id=customer, Date=billingDate, IsCheque=True, BankName=BankName,
                                          DeliveryDate=deliveryDate,
                                          ChequeNo=ChequeNo, TotalAmount=FinalAmount)
         if PaymentMode == "Online":
-            order = Order.objects.create(FK_Customer_Id=customer, Date=timezone.now(), IsOnline=True,
+            order = Order.objects.create(FK_Customer_Id=customer, Date=billingDate, IsOnline=True,
                                          PlatformName=OnlinePlatform, TransactionId=TransactionId,
                                          DeliveryDate=deliveryDate,
                                          TotalAmount=FinalAmount)

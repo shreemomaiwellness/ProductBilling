@@ -123,8 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = STATIC_DIR
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+# STATIC_ROOT = STATIC_DIR
 
 MESSAGE_TAGS = {
     messages.ERROR : 'danger'

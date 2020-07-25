@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
           integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 
-    <title>{{ Order.Id }} {{ Customer.FirstName }} {{ Customer.LastName }}</title>
+    <title>No.{{ Order.Order_Id }} {{ Customer.FirstName }} {{ Customer.LastName }}</title>
     <style>
         html, body {
             font-size: 13px !important;
@@ -54,23 +54,29 @@
     <div class="d-flex justify-content-between">
         <div>
             <img src="{% static 'Images/companio.png' %}" height="60" width="150">
-{#            <p class="text-left h2">Radhe Wellness Center - Companio</p>#}
+            <p class="text-left h2">Shree Momai Wellness - Companio</p>
         </div>
         <h4 class="my-auto"> {{ Today|date:"d/m/Y" }}</h4>
     </div>
 
     <div class="d-flex justify-content-between">
         <div class="">
-{#            <p class="text-left m-0">F-10 / Satyam Plaza, </p>#}
-{#            <p class="text-left m-0">Opp. Suketu Recidency, Dynasty Char Rasta,</p>#}
-{#            <p class="text-left m-0">Nikol-Naroda Road,</p>#}
-{#            <p class="text-left m-0 mb-2">Nikol, Ahmedabad - 382350</p>#}
+            <p class="text-left m-0">Office No. 108, 1<sup>st</sup> Floor, Trade Square, </p>
+            <p class="text-left m-0">Parishkar campus,</p>
+            <p class="text-left m-0">Nr. Khokhra circle,</p>
+            <p class="text-left m-0">Khokhra, Ahmedabad - 380008</p>
+            <p class="text-left m-0 mb-2">Contact No : 6352615405</p>
             <div class="customer-details text-left py-2">
                 <p class="Details-title">Customer Details</p>
                 <strong class="m-0 h5">{{ Customer.FirstName }} {{ Customer.MiddleName }} {{ Customer.LastName }},</strong>
                 <p class="m-0">{{ Customer.Address1 }},</p>
-                <p class="m-0">{{ Customer.Address2 }},</p>
-                <p class="m-0">{{ Customer.City }} - {{ Customer.PinCode }},</p>
+                {% if Customer.Address2 %}
+                    <p class="m-0">{{ Customer.Address2 }},</p>
+                {% endif %}
+                <p class="m-0">{{ Customer.City }}
+                    {% if Customer.PinCode %}
+                        - {{ Customer.PinCode }},
+                    {% endif %}</p>
                 <p class="m-0">{{ Customer.Phone }}</p>
                 <p class="m-0">{{ Customer.Email }}</p>
             </div>
@@ -118,15 +124,15 @@
                     </tr>
                     <tr>
                         <th>Payment Mode</th>
-                        <td>{{ Order.BankName }}</td>
+                        <td>Cheque</td>
                     </tr>
                     <tr>
                         <th>Bank Name</th>
-                        <td>{{ Order.ChequeNo }}</td>
+                        <td>{{ Order.BankName }}</td>
                     </tr>
                     <tr>
                         <th>Cheque No.</th>
-                        <td>Cheque</td>
+                        <td>{{ Order.ChequeNo }}</td>
                     </tr>
                     <tr>
                         <th>Total Amount</th>
@@ -151,7 +157,7 @@
                     </tr>
                     <tr>
                         <th>Payment Mode</th>
-                        <td>{{ Order.BankName }}</td>
+                        <td>Online Payment</td>
                     </tr>
                     <tr>
                         <th>Platform Name</th>
@@ -190,8 +196,10 @@
                 <tr>
                     <td class="fit">{{ forloop.counter }}</td>
                     <td>{{ product.Fk_Product.ProductName|upper }}
-                        {% if not product.ProductCode.isspace %}
-                            ({{ product.ProductCode.strip }})</td>
+                        {% if product.ProductCode %}
+                            {% if not product.ProductCode.isspace %}
+                                ({{ product.ProductCode.strip }})</td>
+                            {% endif %}
                         {% endif %}
                     <td class="fit">{{ product.Quantity }} {{ product.Fk_Product.Quantity_abbr }}</td>
                     <td>&#8377; {{ product.Fk_Product.UnitPrice|floatformat:"0" }}</td>
@@ -212,12 +220,13 @@
     </div>
 
     <div class="d-flex justify-content-between fixed-bottom px-4">
-            <div class="w-75">
-{#                <p class="mb-0" style="font-size: 16px;">Company's PAN : <strong>ABBFR1454M</strong></p>#}
-                <span style="font-size: 14px;"><u>Declaration:</u></span>
-                <p style="font-size: 14px;">We declare that this invoice shows the actual price of the goods described and that all perticulars are true and correct.</p>
-            </div>
-            <p class="h5 text-right w-50 mt-auto mb-4">Radhe Wellness Center</p>
+        <div class="w-75">
+            <p class="mb-0" style="font-size: 16px;">Company's PAN : <strong>BKYPM4053N</strong></p>
+            <span style="font-size: 14px;"><u>Declaration:</u></span>
+            <p style="font-size: 14px;">We declare that this invoice shows the actual price of the goods described and
+                that all perticulars are true and correct.</p>
+        </div>
+        <p class="h5 text-right w-50 mt-auto mb-4">Shree Momai Wellness</p>
     </div>
 
 </div>
