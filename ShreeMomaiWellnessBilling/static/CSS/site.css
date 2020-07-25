@@ -1,0 +1,243 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.error {
+    border-color: #dc3545 !important;
+    color: #dc3545;
+}
+
+    .error:focus {
+        outline: none !important;
+        border: 1px solid #dc3545 !important;
+        box-shadow: 0 0 5px #dc3545 !important;
+    }
+
+.btn-invoice {
+    color: white;
+    border-color: #003f88;
+    background-color: #003f88;
+}
+
+    .btn-invoice:hover {
+        color: white;
+        border-color: #e95911;
+        background-color: #e95911;
+    }
+
+label{
+    color: #003f88;
+}
+
+.btn-crud {
+    background-color: #003f88;
+    color: white;
+}
+
+    .btn-crud:hover {
+        background-color: #e95911;
+        border-color: #e95911;
+        color: white;
+    }
+
+.btn-edit {
+    background-color: #003f88;
+    padding: 5px;
+    border-radius: 55%;
+}
+.btn-edit:hover {
+    opacity: 0.7;
+}
+
+label {
+    margin-bottom: 0px !important;
+    margin-left: 1px !important;
+}
+
+
+/* Custom dropdown */
+.custom-dropdown {
+    position: relative;
+    display: block;
+    vertical-align: middle;
+    margin: 0 0 0 0;
+}
+
+    .custom-dropdown select {
+        background-color: white;
+        width: 100%;
+        color: black;
+        font-size: inherit;
+        height: calc(1.5em + .75rem + 2px);
+        padding-left: .5em;
+        padding-right: 2.5em;
+        border: 1px solid #ced4da;
+        margin: 0;
+        border-radius: 3px;
+        text-indent: 0.01px;
+        text-overflow: '';
+        /*Hiding the select arrow for firefox*/
+        -moz-appearance: none;
+        /*Hiding the select arrow for chrome*/
+        -webkit-appearance: none;
+        /*Hiding the select arrow default implementation*/
+        appearance: none;
+    }
+/*Hiding the select arrow for IE10*/
+.custom-dropdown select::-ms-expand {
+    display: none;
+}
+
+.custom-dropdown::before,
+.custom-dropdown::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+    .custom-dropdown::after { /*  Custom dropdown arrow */
+        content: "\2795";
+        height: 1em;
+        font-size: .625em;
+        color: #ced4da;
+        line-height: 1;
+        right: 1.2em;
+        top: 50%;
+        margin-top: -.5em;
+    }
+
+    .custom-dropdown::before { /*  Custom dropdown arrow cover */
+        width: 2em;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 0 3px 3px 0;
+    }
+
+.custom-dropdown::after {
+    color: black;
+}
+
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+    box-shadow: 0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: auto;
+    padding: 0 10px;
+    border-bottom: none;
+}
+
+
+.btn-nav-left{
+    color: #e95911 !important;
+}
+
+.btn-nav-left:hover{
+    color: #003f88 !important;
+}
+
+.btn-logout {
+    background-color: #e95911 !important;
+    border-color: #e95911 !important;
+}
+.btn-logout:hover{
+    background-color: #003f88 !important;
+    color: white !important;
+    border-color: #003f88 !important;
+}
+
+.btn-submit{
+    background-color: #003f88 !important;
+    color: white !important;
+    border-color: #003f88 !important;
+}
+
+.btn-submit:hover{
+    background-color: #e95911 !important;
+    border-color: #e95911 !important;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+    border-color: #e95911 !important;
+    background-color: #e95911 !important;
+}
+
+.active{
+    color: #003f88 !important;
+}

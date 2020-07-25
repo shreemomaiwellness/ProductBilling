@@ -1,0 +1,494 @@
+{% extends "Base/base.html" %}
+{% load static %}
+{% block title %}
+    Create Order
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <div class="d-flex justify-content-between mt-4">
+            <h1 style="color: #003f88">Create Bill</h1>
+
+            <h1 style="color: #003f88">Order</h1>
+        </div>
+
+        <hr/>
+
+        <form method="post" id="orderForm" name="orderForm" action="{% url 'SubmitOrder' %}">
+            {% csrf_token %}
+
+            <div class="Customer-Details">
+                <h1 style="color: #003f88" class="mt-5">Customer Details</h1>
+                <hr/>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="fname" class="control-label">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="mname" class="control-label">Middle Name</label>
+                        <input type="text" class="form-control" id="mname" name="mname" placeholder="Middle Name"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="lname" class="control-label">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="adddress1" class="control-label">Address line 1</label>
+                        <input type="text" class="form-control" id="adddress1" name="address1"
+                               placeholder="Address line 1"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="address2" class="control-label">Address line 2</label>
+                        <input type="text" class="form-control" id="address2" name="address2"
+                               placeholder="Address line 2"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="city" class="control-label">City</label>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="City"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pincode" class="control-label">Pincode</label>
+                        <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Pincode"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="phone" class="control-label">Contact Number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Contact Number"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Product-Details">
+                <h1 style="color: #003f88" class="mt-5">Product Purchase Details</h1>
+                <hr/>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <label class="control-label" for="DeliveryDate">Delivery Date</label>
+                        <input type="date" class="form-control" placeholder="DD/MM/YYYY" name="DeliveryDate" id="DeliveryDate">
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-3 my-auto">
+                        <input type="checkbox" name="discount-check" value="Discount" class="custom-control-input"
+                               id="give-discount">
+                        <label class="custom-control-label" for="give-discount">Give Discount in Percent</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-3 my-auto">
+                        <input type="checkbox" name="amount-take" value="Amount" class="custom-control-input"
+                               id="take-amount">
+                        <label class="custom-control-label" for="take-amount">Take Lum-Sum Amount</label>
+                    </div>
+                </div>
+                {% for data in Products %}
+                    <div class="product_number mt-3">
+                        <div class="row">
+                            <div class="form-group custom-control custom-checkbox col-lg-4 my-auto">
+                                <div class="error-placement"></div>
+                                <input type="checkbox" class="custom-control-input" id="Product{{ data.Id }}" name="product" value="{{ data.Id }}">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="custom-control-label product-label" style="font-size: 18px;"
+                                       for="Product{{ data.Id }}"><b>{{ data.ProductName }}</b></label>
+                                <br>
+                                <input type="text" id="ProductCode{{ data.Id }}" name="ProductCode" class="form-control" value=" " placeholder="Product Code">
+                            </div>
+                            <fieldset class="form-group col-lg-2" disabled>
+                                <label for="unitPrice{{ data.Id }}" class="control-label">Unit Price</label>
+                                <input type="text" id="unitPrice{{ data.Id }}" class="form-control" name="UnitPrice"
+                                       value="{{ data.UnitPrice }}"/>
+                            </fieldset>
+                            <div class="form-group col-lg-2">
+                                <label for="quantity{{ data.Id }}" class="control-label">Quantity</label>
+                                <input type="number" id="quantity{{ data.Id }}" class="form-control" name="Quantity"
+                                       placeholder="Quantity" min="1"/>
+                            </div>
+                            <div class="form-group col-lg-2 discount-div">
+                                <label for="discount{{ data.Id }}" class="control-label">Discount</label>
+                                <input type="text" id="discount{{ data.Id }}" class="form-control discount"
+                                       name="Discount" placeholder="Discount"/>
+                            </div>
+                            <div class="form-group col-lg-2 amountTaken-div">
+                                <label for="amountTaken{{ data.Id }}" class="control-label">Amount</label>
+                                <input type="text" id="amountTaken{{ data.Id }}" class="form-control amountTaken"
+                                       name="AmountTaken" placeholder="Amount"/>
+                            </div>
+                            <fieldset class="form-group col-lg-2" disabled>
+                                <label for="finalAmount{{ data.Id }}" class="control-label">Final Amount</label>
+                                <input type="text" id="finalAmount{{ data.Id }}" class="form-control" name="FinalAmount"
+                                       placeholder="Final Amount"/>
+                            </fieldset>
+                        </div>
+                        <hr/>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="payment-details">
+                <h1 style="color: #003f88" class="mt-5">Payment Details</h1>
+                <hr/>
+
+                <fieldset>
+                    <legend class="scheduler-border">Payment Mode</legend>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="cash" class="custom-control-input payment-radio" value="Cash"
+                               name="PaymentMode" checked/>
+                        <label class="custom-control-label" for="cash" style="color: #003f88">Cash</label>
+                    </div>
+
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="cheque" class="custom-control-input payment-radio" value="Cheque"
+                               name="PaymentMode"/>
+                        <label class="custom-control-label" for="cheque" style="color: #003f88">Cheque</label>
+                    </div>
+
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="online" class="custom-control-input payment-radio" value="Online"
+                               name="PaymentMode"/>
+                        <label class="custom-control-label" for="online" style="color: #003f88">Online</label>
+                    </div>
+                </fieldset>
+
+                <div id="ChequeDetails" class="row">
+                    <div class="col-md-6">
+                        <label for="bankName" class="control-label">Bank Name</label>
+                        <input type="text" id="bankName" class="form-control" name="BankName" placeholder="Bank Name"/>
+                        <span class="error" id="bankName-error"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="chequeNo" class="control-label">Cheque Number</label>
+                        <input type="text" id="chequeNo" class="form-control" name="ChequeNo" placeholder="Cheque No"/>
+                        <span class="error" id="chequeNo-error"></span>
+                    </div>
+                </div>
+
+                <div id="OnlineDetails" class="row">
+                    <div class="col-md-6">
+                        <label for="onlineMedium" class="control-label">Online Platform Name</label>
+                        <input type="text" id="onlineMedium" class="form-control" name="OnlineMedium"
+                               placeholder="Platform Name"/>
+                        <span class="error" id="onlineMedium-error"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="transactionId" class="control-label">Transaction Id</label>
+                        <input type="text" id="transactionId" class="form-control" name="TransactionId"
+                               placeholder="Transaction Id"/>
+                        <span class="error" id="transactionId-error"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <div class="form-group">
+                    <a class="btn btn-info btn-lg btn-submit" href="{% url 'InvoiceList' %}">Back to List</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" id="submit" value="Save" class="btn btn-lg btn-submit"/>
+                </div>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}
+
+{% block Scripts %}
+    <script type="text/javascript" src="{% static 'JS/jquery.validate.js' %}"></script>
+    <script type="text/javascript" src="{% static 'JS/jquery-validate-additional-methods.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#orderForm").validate({
+                rules: {
+                    fname: {
+                        required: true,
+                        minlength: 2,
+                        pattern: "^[a-zA-Z_]*$",
+                    },
+                    mname: {
+                        pattern: "^[a-zA-Z_]*$",
+                    },
+                    lname: {
+                        required: true,
+                        minlength: 2,
+                        pattern: "^[a-zA-Z_]*$",
+                    },
+                    address1: {
+                        required: true
+                    },
+                    city: {
+                        required: true
+                    },
+                    pincode: {
+                        required: true,
+                        pattern: "^[1-9][0-9]{5}$",
+                    },
+                    phone: {
+                        required: true,
+                        pattern: "^([+][9][1]|[9][1]|[0]){0,1}([7-9]{1})([0-9]{9})$"
+                    },
+                    email: {
+                        required: true,
+                        pattern: "^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[A-Za-z]{2,})$"
+                    },
+                    product: {
+                        required: true
+                    },
+                    BankName: {
+                        required: "#cheque:checked"
+                    },
+                    ChequeNo: {
+                        required: "#cheque:checked"
+                    },
+                    OnlineMedium: {
+                        required: "#online:checked"
+                    },
+                    TransactionId: {
+                        required: "#online:checked"
+                    },
+                    DeliveryDate:{
+                        required: true
+                    }
+                },
+                messages: {
+                    fname: {
+                        required: "First Name is Required",
+                        minlength: "First Name length must be greater than 2",
+                        pattern: "Number is not included in Fisrt Name"
+                    },
+                    mname: {
+                        pattern: "Number is not included in Middle Name"
+                    },
+                    lname: {
+                        required: "Last Name is Required",
+                        minlength: "Last Name length must be greater than 2",
+                        pattern: "Number is not included in Last Name"
+                    },
+                    address1: {
+                        required: "Address Line 1 is Required"
+                    },
+                    city: {
+                        required: "City is Required"
+                    },
+                    pincode: {
+                        required: "Pincode is Required",
+                        pattern: "Enter Valid Pincode",
+                    },
+                    phone: {
+                        required: "Contact Number is Required",
+                        pattern: "Enter Valid Indian Contact Number"
+                    },
+                    email: {
+                        required: "Email is Required",
+                        pattern: "Provide Valid Email Address"
+                    },
+                    product: {
+                        required: "Select Atleast one Product"
+                    },
+                    BankName: {
+                        required: "Bank Name is Required when payment method is cheque"
+                    },
+                    ChequeNo: {
+                        required: "Cheque Number is Required when payment method is cheque"
+                    },
+                    OnlineMedium: {
+                        required: "Platform Name is Required when payment method is online"
+                    },
+                    TransactionId: {
+                        required: "Transaction Id is Required when payment method is online"
+                    },
+                    DeliveryDate:{
+                        required: "Delivery Date is Required"
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("type") == "checkbox") {
+                        error.insertBefore($(element).prev('.error-placement'));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }});
+
+            $("#submit").click(function () {
+                if ($(".payment-radio").val() == 'Cheque') {
+                    $("#bankName").is('keypress blur change', function () {
+                        if ($("#bankName").val() == null || $("#bankName").val() == '') {
+                            $("#bankName-error").html("Bank Name is Required");
+                            return false;
+                        }
+                    });
+
+                    $("#chequeNo").is('keypress blur change', function () {
+                        if ($("#chequeNo").val() == null || $("#chequeNo").val() == '') {
+                            $("#chequeNo-error").html("Bank Name is Required");
+                            return false;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var count = [];
+        for (var i = 0; i <= {{ Products.count }} + 1; i++) {
+            count.push(i);
+        }
+
+        $('.discount-div').hide();
+        $('.amountTaken-div').hide();
+        $('.discount').val('');
+        $('.amountTaken').val('');
+        $('#OnlineDetails').hide();
+        $('#ChequeDetails').hide();
+
+        $(document).ready(function () {
+            $.each(count,
+                function (index, value) {
+
+                    $("#ProductCode"+value).hide()
+
+                    $('#give-discount').change(function () {
+                        if ($(this).is(":checked")) {
+                            $("#take-amount").prop('checked', false);
+                            $('.amountTaken-div').hide();
+                            $('.discount-div').show(500);
+                            $('.amountTaken').val('');
+                            $('#finalAmount' + value).val($("#quantity" + value).val() * $("#unitPrice" + value).val());
+                        } else {
+                            $('.discount-div').hide(500);
+                            $('#finalAmount' + value).val($("#quantity" + value).val() * $("#unitPrice" + value).val());
+                            $('.discount').val('');
+                        }
+                    });
+
+                    $("#Product" + value).change(function () {
+                        if ($(this).is(":checked")) {
+                            $("#quantity" + value).val('1');
+                            var unitPrice = $("#unitPrice" + value).val();
+                            var discount = $('#discount' + value).val();
+                            var amountTaken = $('#amountTaken' + value).val();
+                            var quantity = $("#quantity" + value).val();
+                            var finalAmount = $('#finalAmount' + value);
+
+                            $("#ProductCode"+value).show()
+
+                            if (discount == "" && amountTaken == "") {
+                                finalAmount.val(quantity * unitPrice);
+                            }
+
+                            if (discount == "") {
+                                finalAmount.val(amountTaken * quantity);
+                            }
+
+                            if (amountTaken == "") {
+                                var amount = unitPrice - ((unitPrice * discount) / 100);
+                                finalAmount.val(amount * quantity);
+                            }
+                        } else {
+                            $("#quantity" + value).val('');
+                            $("#finalAmount"+value).val('');
+                            $("#ProductCode"+value).hide()
+                        }
+                    });
+
+
+                    $('#take-amount').change(function () {
+                        if ($(this).is(":checked")) {
+                            $("#give-discount").prop('checked', false);
+                            $('.discount-div').hide();
+                            $('.discount').val('');
+                            $('.amountTaken-div').show(500);
+                            $('#finalAmount' + value).val($("#quantity" + value).val() * $("#unitPrice" + value).val());
+                        } else {
+                            $('.amountTaken-div').hide(500);
+                            $('#finalAmount' + value).val($("#quantity" + value).val() * $("#unitPrice" + value).val());
+                            $('.amountTaken').val('');
+                        }
+                    });
+
+                    $("#quantity" + value).change(function () {
+                        var unitPrice = $("#unitPrice" + value).val();
+                        var discount = $('#discount' + value).val();
+                        var amountTaken = $('#amountTaken' + value).val();
+                        var quantity = $("#quantity" + value).val();
+                        var finalAmount = $('#finalAmount' + value);
+
+                        if (discount == "" && amountTaken == "") {
+                            finalAmount.val(quantity * unitPrice);
+                        }
+
+                        if (discount == "") {
+                            finalAmount.val(amountTaken * quantity);
+                        }
+
+                        if (amountTaken == "") {
+                            var amount = unitPrice - ((unitPrice * discount) / 100);
+                            finalAmount.val(amount * quantity);
+                        }
+                    });
+
+                    $('#discount' + value).change(function () {
+                        var unitPrice = $("#unitPrice" + value).val();
+                        var discount = $('#discount' + value).val();
+                        var amountTaken = $('#amountTaken' + value).val();
+                        var quantity = $("#quantity" + value).val();
+                        var finalAmount = $('#finalAmount' + value);
+
+                        if ($("#give-discount").is(":checked") && amountTaken == "") {
+                            var amount = unitPrice - ((unitPrice * discount) / 100);
+                            finalAmount.val(amount * quantity);
+                        }
+                    });
+
+                    $('#amountTaken' + value).change(function () {
+                        var unitPrice = $("#unitPrice" + value).val();
+                        var discount = $('#discount' + value).val();
+                        var amountTaken = $('#amountTaken' + value).val();
+                        var quantity = $("#quantity" + value).val();
+                        var finalAmount = $('#finalAmount' + value);
+
+                        if ($("#take-amount").is(":checked") && discount == "") {
+                            finalAmount.val(amountTaken * quantity);
+                        }
+                    });
+                });
+
+            $('.payment-radio').change(function () {
+                if ($(this).val() == 'Cash') {
+                    $('#OnlineDetails').hide(500);
+                    $('#ChequeDetails').hide(500);
+                    $('#bankName').val('');
+                    $('#chequeNo').val('');
+                    $('#onlineMedium').val('');
+                    $('#transactionId').val('');
+                }
+
+                if ($(this).val() == 'Cheque') {
+                    $('#ChequeDetails').show(500);
+                    $('#OnlineDetails').hide(500);
+                    $('#onlineMedium').val('');
+                    $('#transactionId').val('');
+                }
+
+                if ($(this).val() == 'Online') {
+                    $('#OnlineDetails').show(500);
+                    $('#ChequeDetails').hide(500);
+                    $('#bankName').val('');
+                    $('#chequeNo').val('');
+                }
+            });
+        });
+
+
+    </script>
+{% endblock %}

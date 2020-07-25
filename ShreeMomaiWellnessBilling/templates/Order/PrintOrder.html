@@ -1,0 +1,240 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static "Images/companio-favicon.ico" %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+          integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+    <title>{{ Order.Id }} {{ Customer.FirstName }} {{ Customer.LastName }}</title>
+    <style>
+        html, body {
+            font-size: 13px !important;
+            height: 100%;
+        }
+
+        @media print {
+            .header, .hide {
+                visibility: hidden
+            }
+        }
+
+        .Details-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .blank_row {
+            height: 36px !important; /* overwrites any other rules */
+            background-color: #FFFFFF;
+        }
+
+        .stamp {
+            position: absolute;
+            bottom: 2%;
+        }
+
+        .table td.fit,
+        .table th.fit {
+            white-space: nowrap;
+            width: 1%;
+        }
+    </style>
+
+</head>
+<body class="border border-dark">
+<div class="contener-fluid m-2 px-4 py-2">
+
+    <h1 class="text-center">Invoice</h1>
+    <div class="d-flex justify-content-between">
+        <div>
+            <img src="{% static 'Images/companio.png' %}" height="60" width="150">
+{#            <p class="text-left h2">Radhe Wellness Center - Companio</p>#}
+        </div>
+        <h4 class="my-auto"> {{ Today|date:"d/m/Y" }}</h4>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div class="">
+{#            <p class="text-left m-0">F-10 / Satyam Plaza, </p>#}
+{#            <p class="text-left m-0">Opp. Suketu Recidency, Dynasty Char Rasta,</p>#}
+{#            <p class="text-left m-0">Nikol-Naroda Road,</p>#}
+{#            <p class="text-left m-0 mb-2">Nikol, Ahmedabad - 382350</p>#}
+            <div class="customer-details text-left py-2">
+                <p class="Details-title">Customer Details</p>
+                <strong class="m-0 h5">{{ Customer.FirstName }} {{ Customer.MiddleName }} {{ Customer.LastName }},</strong>
+                <p class="m-0">{{ Customer.Address1 }},</p>
+                <p class="m-0">{{ Customer.Address2 }},</p>
+                <p class="m-0">{{ Customer.City }} - {{ Customer.PinCode }},</p>
+                <p class="m-0">{{ Customer.Phone }}</p>
+                <p class="m-0">{{ Customer.Email }}</p>
+            </div>
+        </div>
+        <div class="flex-fill payment-details text-left px-3 py-2">
+            <p class="Details-title">Payment Details</p>
+            {% if Order.IsCash %}
+                <table class="table table-bordered mb-1">
+                    <tr>
+                        <th>Invoice No.</th>
+                        <td>{{ Order.Order_Id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Billing Date</th>
+                        <td>{{ Order.Date|date:"d/m/Y" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Date</th>
+                        <td>{{ Order.DeliveryDate|date:"d/m/Y" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment Mode</th>
+                        <td>Cash</td>
+                    </tr>
+                    <tr>
+                        <th>Total Amount</th>
+                        <td>&#8377; {{ Order.TotalAmount }}</td>
+                    </tr>
+                </table>
+            {% endif %}
+
+            {% if Order.IsCheque %}
+                <table class="table table-bordered mb-1">
+                    <tr>
+                        <th>Invoice No.</th>
+                        <td>{{ Order.Order_Id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Billing Date</th>
+                        <td>{{ Order.Date|date:"d/m/Y" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Date</th>
+                        <td>{{ Order.DeliveryDate|date:"d/m/Y" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment Mode</th>
+                        <td>{{ Order.BankName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Bank Name</th>
+                        <td>{{ Order.ChequeNo }}</td>
+                    </tr>
+                    <tr>
+                        <th>Cheque No.</th>
+                        <td>Cheque</td>
+                    </tr>
+                    <tr>
+                        <th>Total Amount</th>
+                        <td>&#8377; {{ Order.TotalAmount }}</td>
+                    </tr>
+                </table>
+            {% endif %}
+
+            {% if Order.IsOnline %}
+                <table class="table table-bordered mb-1">
+                    <tr>
+                        <th>Invoice No.</th>
+                        <td>{{ Order.Order_Id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Billing Date</th>
+                        <td>{{ Order.Date|date:"d/m/Y" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Date</th>
+                        <td>{{ Order.DeliveryDate|date:"d/m/Y" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment Mode</th>
+                        <td>{{ Order.BankName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Platform Name</th>
+                        <td>{{ Order.PlatformName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Transaction Id</th>
+                        <td>{{ Order.TransactionId }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Amount</th>
+                        <td>&#8377; {{ Order.TotalAmount }}</td>
+                    </tr>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="product-details text-left border border-secondary px-3 py-2 mt-2">
+        <p class="Details-title">Products</p>
+        <table class="table table-bordered mb-1">
+            <thead>
+            <tr>
+                <th class="fit">No.</th>
+                <th>Product</th>
+                <th class="fit">Qty</th>
+                <th>Rate</th>
+                <th class="fit">per</th>
+                <th class="fit">Discount</th>
+                <th>Final Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in ProductOrder %}
+                <tr>
+                    <td class="fit">{{ forloop.counter }}</td>
+                    <td>{{ product.Fk_Product.ProductName|upper }}
+                        {% if not product.ProductCode.isspace %}
+                            ({{ product.ProductCode.strip }})</td>
+                        {% endif %}
+                    <td class="fit">{{ product.Quantity }} {{ product.Fk_Product.Quantity_abbr }}</td>
+                    <td>&#8377; {{ product.Fk_Product.UnitPrice|floatformat:"0" }}</td>
+                    <td class="fit">{{ product.Fk_Product.Quantity_abbr }}</td>
+                    <td class="fit">{{ product.Discount }} %</td>
+                    <td>&#8377; {{ product.FinalAmount }}</td>
+                </tr>
+            {% endfor %}
+            <th colspan="6" class="text-right">Total</th>
+            <td>&#8377; {{ Order.TotalAmount }}</td>
+            </tr>
+            <tr>
+                <td colspan="7" class="text-right"><b>Amount(in Words) : </b> {{ AmountInWords }} rupees only
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between fixed-bottom px-4">
+            <div class="w-75">
+{#                <p class="mb-0" style="font-size: 16px;">Company's PAN : <strong>ABBFR1454M</strong></p>#}
+                <span style="font-size: 14px;"><u>Declaration:</u></span>
+                <p style="font-size: 14px;">We declare that this invoice shows the actual price of the goods described and that all perticulars are true and correct.</p>
+            </div>
+            <p class="h5 text-right w-50 mt-auto mb-4">Radhe Wellness Center</p>
+    </div>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        window.print()
+    });
+</script>
+</body>
+</html>
